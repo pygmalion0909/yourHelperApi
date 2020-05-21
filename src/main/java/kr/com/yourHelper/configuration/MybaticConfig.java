@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
-public class MybaticConfiguration {
+public class MybaticConfig {
 	
 	@Autowired
 	public ApplicationContext applicationContext;
