@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.com.yourHelper.Dao.ArticleRepository;
 import kr.com.yourHelper.Dto.ArticleDto;
-import kr.com.yourHelper.Mapper.ArticleMapper;
 
 @Service
 public class ArticleServiece{
 	
 	@Autowired
-	private ArticleMapper articleMapper;
+	private ArticleRepository articleMapper;
 	
 	public List<ArticleDto> allList(String index) {
 //		모든 article 정보 가져오기

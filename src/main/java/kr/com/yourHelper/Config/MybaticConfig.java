@@ -1,4 +1,4 @@
-package kr.com.yourHelper.configuration;
+package kr.com.yourHelper.Config;
 
 import javax.sql.DataSource;
 

@@ -3,18 +3,18 @@ package kr.com.yourHelper.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.com.yourHelper.Dto.ArticleDto;
+import kr.com.yourHelper.Dto.MemberCreateDto;
 import kr.com.yourHelper.Service.ArticleServiece;
+import kr.com.yourHelper.Service.MemberService;
 
 @RestController
 @RequestMapping("/v1")
@@ -22,6 +22,8 @@ public class GateA1 {
 	
 	@Autowired
 	ArticleServiece articleService;
+	@Autowired
+	MemberService memeberService;
 	
 //	로그인한 member와 guest도 접속 가능(모든 사용자 접속 가능)
 //	각각의 카테고리의 내용을 최신 5개 불러와서 로딩하기
@@ -66,5 +68,18 @@ public class GateA1 {
 //		System.out.println(id);
 //		article.articleDelete(id);
 //	}
+	
+	/**
+	 * member생성
+	 * 
+	 * @param userCreateDto UserCreateDto $memberId $password $nickName
+	 * 
+	 */
+	//member 등록
+	@PostMapping("/member/create")
+	public void createMember(@RequestBody MemberCreateDto memberCreateDto) {
+		System.out.println("memberCreateDto>>" + memberCreateDto);
+		memeberService.createMember(memberCreateDto);
+	}
 	
 }

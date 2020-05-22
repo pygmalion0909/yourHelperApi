@@ -1,4 +1,4 @@
-package kr.com.yourHelper.Mapper;
+package kr.com.yourHelper.Dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import kr.com.yourHelper.Dto.ArticleDto;
 
 
 @Mapper
-public interface ArticleMapper {
+public interface ArticleRepository {
 	public List<ArticleDto> findAllListByIndexId(String id);
 	
 	
