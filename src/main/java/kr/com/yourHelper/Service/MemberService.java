@@ -1,11 +1,15 @@
 package kr.com.yourHelper.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.com.yourHelper.Dao.MemberRepository;
+import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.MemberCreateDto;
+import kr.com.yourHelper.Dto.MemberDto;
 
 @Service
 public class MemberService {
@@ -21,6 +25,25 @@ public class MemberService {
 		
 		//member저장
 		memberRepository.save(memberCreateDto);
+	}
+	
+	/**
+	 * 모든 member 정보.
+	 * 
+	 * @return
+	 * 
+	 */
+	public MemberList allList() {
+		
+		//member총개수
+		int count = memberRepository.count();
+		
+		//member정보
+		List<MemberDto> allListInfo = memberRepository.findAllList();
+		
+		//return
+		MemberList response = new MemberList(count, allListInfo);
+		return response;
 		
 	}
 	
