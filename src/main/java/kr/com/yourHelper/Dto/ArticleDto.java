@@ -1,23 +1,24 @@
 package kr.com.yourHelper.Dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-@JsonInclude(Include.NON_NULL)
 public class ArticleDto {
-	private String id;
-	private String title;
-	private String content;
-	private String createDate;
-	private String updateDate;
-	private int hits;
-	private String articleListId;
 	
-	public String getId() {
-		return id;
+	private String articleId;
+	private String memberId;
+	private String title;
+	private String categoryId;
+	private String nickName;
+	
+	public String getArticleId() {
+		return articleId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setArticleId(String articleId) {
+		this.articleId = articleId;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	public String getTitle() {
 		return title;
@@ -25,43 +26,23 @@ public class ArticleDto {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContent() {
-		return content;
+	public String getCategoryId() {
+		return categoryId;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getCreateDate() {
-		return createDate;
+	public String getNickName() {
+		return nickName;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-	public String getUpdateDate() {
-		return updateDate;
-	}
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
-	}
-	public int getHits() {
-		return hits;
-	}
-	public void setHits(int hits) {
-		this.hits = hits;
-	}
-	public String getArticleListId() {
-		return articleListId;
-	}
-	public void setArticleListId(String articleListId) {
-		this.articleListId = articleListId;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 	@Override
 	public String toString() {
-		return "ArticleDto [id=" + id + ", title=" + title + ", content=" + content + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + ", hits=" + hits + ", articleListId=" + articleListId + "]";
+		return "ArticleDto [articleId=" + articleId + ", memberId=" + memberId + ", title=" + title + ", categoryId="
+				+ categoryId + ", nickName=" + nickName + "]";
 	}
-	
-	
 	
 }

@@ -12,6 +12,6 @@ public interface MemberRepository {
 	
 	public void save(MemberCreateDto memberCreateDto);
 	public int count();
-	public List<MemberDto> findAllList();
+	public List<MemberDto> findMemberInfo();
 	
 }

@@ -33,16 +33,19 @@ public class MemberService {
 	 * @return
 	 * 
 	 */
-	public MemberList allList() {
+	public MemberList getMemberInfo() {
 		
 		//member√—∞≥ºˆ
 		int count = memberRepository.count();
+		System.out.println("memberCount>>" + count);
 		
 		//member¡§∫∏
-		List<MemberDto> allListInfo = memberRepository.findAllList();
+		List<MemberDto> MemberInfoList = memberRepository.findMemberInfo();
+		System.out.println("memberInfor>>" + MemberInfoList);
 		
 		//return
-		MemberList response = new MemberList(count, allListInfo);
+		MemberList response = new MemberList(count, MemberInfoList);
+		System.out.println("memberInfoReturn" + response);
 		return response;
 		
 	}

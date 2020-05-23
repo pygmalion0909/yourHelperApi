@@ -8,7 +8,7 @@
 		VALUES (#{memberId}, #{password}, #{nickName}, now())
 	</insert>
 	
-	<select id="findAllList" resultType="kr.com.yourHelper.Dto.MemberDto">
+	<select id="findMemberInfo" resultType="kr.com.yourHelper.Dto.MemberDto">
 		SELECT *
 		FROM tb_member
 	</select>
