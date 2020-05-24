@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.com.yourHelper.Dao.ArticleRepository;
+import kr.com.yourHelper.Dao.MemberRepository;
 import kr.com.yourHelper.Dto.ArticleContentDto;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
 import kr.com.yourHelper.Dto.ArticleDto;
 import kr.com.yourHelper.Dto.ArticleFileDto;
+import kr.com.yourHelper.Dto.CategoryDto;
 
 @Service
 public class ArticleServiece{
@@ -15,28 +17,47 @@ public class ArticleServiece{
 	@Autowired
 	private ArticleRepository articleRepository;
 	
+	@Autowired
+	private MemberRepository memberRepository;
+	
+	/**
+	 * article 저장
+	 * 
+	 * 필수저장값>> $title $content $categoryId $memberId.
+	 * categoryId는 categoryCode로 memberId는 nickName으로 찾음.
+	 * 
+	 * @param articleCreateDto $title $content $nickName $categoryCode $fileName $fileDate
+	 * 
+	 */
 	public void createArticle(ArticleCreateDto articleCreateDto) {
 		
 		//controller에서 받는 최초값
 		System.out.println("service articleCreateDto>>" + articleCreateDto);
 		
+		//categoryId값 찾기
+		CategoryDto categoryInfo = articleRepository.findCategoryByCode(articleCreateDto.getCategoryCode());
+		System.out.println("categoryInfo>>" + categoryInfo);
+		
+		//memberId값 찾기
+		int memberId = memberRepository.findMemberIdByNickName(articleCreateDto.getNickName());
+		System.out.println("memberId>>" + memberId);
+		
 		//article테이블 저장
 		ArticleDto articleDto = new ArticleDto();
-		articleDto.setMemberId(articleCreateDto.getMemberId());
+		articleDto.setMemberId(memberId);
 		articleDto.setTitle(articleCreateDto.getTitle());
-		articleDto.setCategoryId(articleCreateDto.getCategoryId());
+		articleDto.setCategoryId(categoryInfo.getId());
 		articleDto.setNickName(articleCreateDto.getNickName());
-
-//		articleRepository.saveArticle(articleDto);
 		System.out.println("service article mapper>>"+articleDto);
+		articleRepository.saveArticle(articleDto);
 		
 		//content테이블 저장
+		System.out.println("articleId??>>" + articleDto.getArticleId()); // article에 저장되고 아뒤값이 넘어옴
 		ArticleContentDto articleContentDto = new ArticleContentDto();
 		articleContentDto.setArticleId(articleDto.getArticleId());
 		articleContentDto.setContent(articleCreateDto.getContent());
-		
-//		articleRepository.saveContent(articleContentDto);
 		System.out.println("service content mapper>>"+articleContentDto);
+		articleRepository.saveContent(articleContentDto);
 		
 		//file테이블 저장
 		if(articleCreateDto.getFileDate() != null) {
@@ -44,9 +65,8 @@ public class ArticleServiece{
 			articleFileDto.setArticleId(articleDto.getArticleId());
 			articleFileDto.setFileName(articleCreateDto.getFileName());
 			articleFileDto.setFileDate(articleCreateDto.getFileDate());
-			
-//			articleRepository.saveFile(articleFileDto);
 			System.out.println("service content mapper>>"+articleContentDto);
+//			articleRepository.saveFile(articleFileDto);
 		}
 
 	}

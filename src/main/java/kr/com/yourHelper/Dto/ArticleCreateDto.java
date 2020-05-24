@@ -2,20 +2,13 @@ package kr.com.yourHelper.Dto;
 
 public class ArticleCreateDto {
 	
-	private String memberId;
 	private String title;
 	private String content;
 	private String nickName;
 	private String fileName;
 	private String fileDate;
-	private String categoryId;
+	private String categoryCode;
 	
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -46,17 +39,18 @@ public class ArticleCreateDto {
 	public void setFileDate(String fileDate) {
 		this.fileDate = fileDate;
 	}
-	public String getCategoryId() {
-		return categoryId;
+	public String getCategoryCode() {
+		return categoryCode;
 	}
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 	
 	@Override
 	public String toString() {
-		return "ArticleCreateDto [memberId=" + memberId + ", title=" + title + ", content=" + content + ", nickName="
-				+ nickName + ", fileName=" + fileName + ", fileDate=" + fileDate + ", categoryId=" + categoryId + "]";
+		return "ArticleCreateDto [title=" + title + ", content=" + content + ", nickName="
+				+ nickName + ", fileName=" + fileName + ", fileDate=" + fileDate + ", categoryCode=" + categoryCode
+				+ "]";
 	}
 	
 }

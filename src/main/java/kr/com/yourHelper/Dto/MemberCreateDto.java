@@ -1,15 +1,18 @@
 package kr.com.yourHelper.Dto;
 
 public class MemberCreateDto {
-	private String memberId;
+	
+	private String loginId;
 	private String password;
 	private String nickName;
+	private String authorityCode;
+	private String authorityId;
 	
-	public String getMemberId() {
-		return memberId;
+	public String getLoginId() {
+		return loginId;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	public String getPassword() {
 		return password;
@@ -23,10 +26,23 @@ public class MemberCreateDto {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-
+	public String getAuthorityCode() {
+		return authorityCode;
+	}
+	public void setAuthorityCode(String authorityCode) {
+		this.authorityCode = authorityCode;
+	}
+	public String getAuthorityId() {
+		return authorityId;
+	}
+	public void setAuthorityId(String authorityId) {
+		this.authorityId = authorityId;
+	}
+	
 	@Override
 	public String toString() {
-		return "UserCreateDto [memberId=" + memberId + ", password=" + password + ", nickName=" + nickName + "]";
+		return "MemberCreateDto [loginId=" + loginId + ", password=" + password + ", nickName=" + nickName
+				+ ", authorityCode=" + authorityCode + ", authorityId=" + authorityId + "]";
 	}
 	
 }

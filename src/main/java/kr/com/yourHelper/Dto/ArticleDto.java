@@ -3,7 +3,7 @@ package kr.com.yourHelper.Dto;
 public class ArticleDto {
 	
 	private String articleId;
-	private String memberId;
+	private int memberId;
 	private String title;
 	private String categoryId;
 	private String nickName;
@@ -14,10 +14,10 @@ public class ArticleDto {
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
-	public String getMemberId() {
+	public int getMemberId() {
 		return memberId;
 	}
-	public void setMemberId(String memberId) {
+	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
 	public String getTitle() {

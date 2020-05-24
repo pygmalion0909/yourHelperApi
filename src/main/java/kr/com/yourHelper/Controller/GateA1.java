@@ -31,20 +31,12 @@ public class GateA1 {
 	@Autowired
 	MemberService memberService;
 	
-//	로그인한 member와 guest도 접속 가능(모든 사용자 접속 가능)
-//	각각의 카테고리의 내용을 최신 5개 불러와서 로딩하기
-//	@GetMapping(value="/board")
-//	public void helperHome(){
-//		articleService.articleMainList();
-//	}
-	
-	// articleCreate, articleList, article
 	/**
 	 * article 생성.
 	 * 
-	 * $memberId $title, $content, $nickName $categoryId 필수값.
+	 * param필수값>> $title $content $nickName $categoryCode.
 	 * 
-	 * @param articleDto $title $content $nickName $fileName $fileDate
+	 * @param articleDto $title $content $nickName $categoryCode $fileName $fileDate.
 	 * 
 	 */
 	@PostMapping(value="/article/create")
@@ -118,9 +110,9 @@ public class GateA1 {
 	/**
 	 * member생성.
 	 * 
-	 * memberId, password, nickName은 필수값.
+	 * memberId, password, nickName, authorityCode은 필수값.
 	 * 
-	 * @param userCreateDto $memberId $password $nickName
+	 * @param userCreateDto $memberId $password $nickName $authorityCode
 	 * 
 	 */
 	@PostMapping("/member/create")
