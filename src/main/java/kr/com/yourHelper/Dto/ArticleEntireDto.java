@@ -1,32 +1,20 @@
 package kr.com.yourHelper.Dto;
 
-public class ArticleDto {
+public class ArticleEntireDto {
 	
 	private String id;
-	private String memberId;
-	private String categoryId;
 	private String title;
 	private String createDate;
 	private String modifyDate;
 	private int hit;
+	private String content;
+	private String nickName;
 	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-	public String getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
 	}
 	public String getTitle() {
 		return title;
@@ -52,11 +40,23 @@ public class ArticleDto {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	
 	@Override
 	public String toString() {
-		return "ArticleDto [id=" + id + ", memberId=" + memberId + ", categoryId=" + categoryId + ", title=" + title
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", hit=" + hit + "]";
+		return "ArticleEntireDto [id=" + id + ", title=" + title + ", createDate=" + createDate + ", modifyDate="
+				+ modifyDate + ", hit=" + hit + ", content=" + content + ", nickName=" + nickName + "]";
 	}
 	
 }

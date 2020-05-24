@@ -1,27 +1,32 @@
 package kr.com.yourHelper.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.com.yourHelper.Dao.ArticleRepository;
 import kr.com.yourHelper.Dao.MemberRepository;
+import kr.com.yourHelper.Domain.ArticleList;
 import kr.com.yourHelper.Dto.ArticleContentDto;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
 import kr.com.yourHelper.Dto.ArticleDto;
+import kr.com.yourHelper.Dto.ArticleEntireDto;
 import kr.com.yourHelper.Dto.ArticleFileDto;
 import kr.com.yourHelper.Dto.CategoryDto;
+import kr.com.yourHelper.Dto.MemberDto;
 
 @Service
 public class ArticleServiece{
 	
 	@Autowired
 	private ArticleRepository articleRepository;
-	
 	@Autowired
 	private MemberRepository memberRepository;
 	
 	/**
-	 * article 저장
+	 * article 저장.
 	 * 
 	 * 필수저장값>> $title $content $categoryId $memberId.
 	 * categoryId는 categoryCode로 memberId는 nickName으로 찾음.
@@ -39,7 +44,7 @@ public class ArticleServiece{
 		System.out.println("categoryInfo>>" + categoryInfo);
 		
 		//memberId값 찾기
-		int memberId = memberRepository.findMemberIdByNickName(articleCreateDto.getNickName());
+		String memberId = memberRepository.findMemberIdByNickName(articleCreateDto.getNickName());
 		System.out.println("memberId>>" + memberId);
 		
 		//article테이블 저장
@@ -47,14 +52,12 @@ public class ArticleServiece{
 		articleDto.setMemberId(memberId);
 		articleDto.setTitle(articleCreateDto.getTitle());
 		articleDto.setCategoryId(categoryInfo.getId());
-		articleDto.setNickName(articleCreateDto.getNickName());
 		System.out.println("service article mapper>>"+articleDto);
 		articleRepository.saveArticle(articleDto);
 		
 		//content테이블 저장
-		System.out.println("articleId??>>" + articleDto.getArticleId()); // article에 저장되고 아뒤값이 넘어옴
 		ArticleContentDto articleContentDto = new ArticleContentDto();
-		articleContentDto.setArticleId(articleDto.getArticleId());
+		articleContentDto.setArticleId(articleDto.getId());
 		articleContentDto.setContent(articleCreateDto.getContent());
 		System.out.println("service content mapper>>"+articleContentDto);
 		articleRepository.saveContent(articleContentDto);
@@ -62,7 +65,7 @@ public class ArticleServiece{
 		//file테이블 저장
 		if(articleCreateDto.getFileDate() != null) {
 			ArticleFileDto articleFileDto = new ArticleFileDto();
-			articleFileDto.setArticleId(articleDto.getArticleId());
+			articleFileDto.setArticleId(articleDto.getId());
 			articleFileDto.setFileName(articleCreateDto.getFileName());
 			articleFileDto.setFileDate(articleCreateDto.getFileDate());
 			System.out.println("service content mapper>>"+articleContentDto);
@@ -71,8 +74,54 @@ public class ArticleServiece{
 
 	}
 	
-	
-	
+	/**
+	 * article 리스트.
+	 *  
+	 * @return
+	 * 
+	 */
+	public ArticleList getArticleList(String code) {
+		
+		//controller에서 들어오는 최초값
+		System.out.println("from insert controller>>" + code);
+		
+		//categoryId값
+		CategoryDto categoryInfo = articleRepository.findCategoryByCode(code);
+		System.out.println("categoryInfo in service>>" + categoryInfo);
+		
+		//count정보
+		int count = articleRepository.findCountByCategoryId(categoryInfo.getId());
+		System.out.println("count in service>>" + count);
+		
+		//article정보
+		List<ArticleDto> articleInfo = articleRepository.findArticleInfoByCategoryId(categoryInfo.getId());
+		System.out.println("articleInfo in service>>" + articleInfo);
+
+		//return타입에 저장 및 nickName찾기
+		List<ArticleEntireDto> list = new ArrayList<>();
+				
+		for(ArticleDto value : articleInfo) {
+			ArticleEntireDto listInfo = new ArticleEntireDto();
+			listInfo.setId(value.getId());
+			listInfo.setCreateDate(value.getCreateDate());
+			listInfo.setModifyDate(value.getModifyDate());
+			listInfo.setHit(value.getHit());
+			listInfo.setTitle(value.getTitle());
+			
+			//nickName정보
+			MemberDto meberInfo = memberRepository.findMemberInfoByMemberId(value.getMemberId());
+			listInfo.setNickName(meberInfo.getNickName());
+			System.out.println("meberInfo in service>>" + meberInfo);
+			
+			list.add(listInfo);
+		}
+		
+		//return
+		System.out.println("return in service>>" + list);
+		ArticleList articleList = new ArticleList(count, list);
+		return articleList;
+		
+	}
 	
 //	public List<ArticleDto> allList(String index) {
 //		모든 article 정보 가져오기

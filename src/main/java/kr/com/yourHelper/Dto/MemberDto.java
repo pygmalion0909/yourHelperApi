@@ -1,16 +1,18 @@
 package kr.com.yourHelper.Dto;
 
 public class MemberDto {
-	private String memberId;
+	
+	private String id;
+	private String loginId;
 	private String nickName;
 	private String createDate;
 	private String modifyDate;
 	
-	public String getMemberId() {
-		return memberId;
+	public String getLoginId() {
+		return loginId;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	public String getNickName() {
 		return nickName;
@@ -33,7 +35,7 @@ public class MemberDto {
 	
 	@Override
 	public String toString() {
-		return "MemberDto [memberId=" + memberId + ", nickName=" + nickName + ", createDate=" + createDate
+		return "MemberDto [loginId=" + loginId + ", nickName=" + nickName + ", createDate=" + createDate
 				+ ", modifyDate=" + modifyDate + "]";
 	}
 	

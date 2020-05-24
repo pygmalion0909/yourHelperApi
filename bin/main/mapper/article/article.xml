@@ -7,7 +7,7 @@
 		INSERT INTO tb_article (member_id, category_id, title, create_date, hit)
 		VALUES (#{memberId}, #{categoryId}, #{title}, now(), 0)
 		
-		<selectKey resultType="String" keyProperty="articleId" order="AFTER">
+		<selectKey resultType="String" keyProperty="id" order="AFTER">
         	SELECT LAST_INSERT_ID()
     	</selectKey>
 	</insert>
@@ -21,6 +21,18 @@
 		SELECT *
 		FROM tb_category
 		WHERE code = #{code}
+	</select>
+	
+	<select id="findArticleInfoByCategoryId" resultType="kr.com.yourHelper.Dto.ArticleDto">
+		SELECT *
+		FROM tb_article
+		WHERE category_id = #{categoryId}
+	</select>
+	
+	<select id="findCountByCategoryId" resultType="int">
+		SELECT count(id)
+		FROM tb_article
+		WHERE category_id = #{categoryId};
 	</select>
 	
 </mapper>

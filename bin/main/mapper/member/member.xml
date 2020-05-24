@@ -18,10 +18,16 @@
 		FROM tb_member
 	</select>
 	
-	<select id="findMemberIdByNickName" resultType="int">
+	<select id="findMemberIdByNickName" resultType="String">
 		SELECT id
 		FROM tb_member
 		WHERE nick_name = #{nickName}
+	</select>
+	
+	<select id="findMemberInfoByMemberId" resultType="kr.com.yourHelper.Dto.MemberDto">
+		SELECT *
+		FROM tb_member
+		WHERE id = #{id}
 	</select>
 	
 </mapper>

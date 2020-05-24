@@ -13,6 +13,7 @@ import kr.com.yourHelper.Dto.MemberDto;
 
 @Service
 public class MemberService {
+	
 	@Autowired
 	MemberRepository memberRepository;
 	
@@ -36,6 +37,7 @@ public class MemberService {
 		//member¿˙¿Â
 		memberCreateDto.setAuthorityId("2");
 		memberRepository.save(memberCreateDto);
+		
 	}
 	
 	/**

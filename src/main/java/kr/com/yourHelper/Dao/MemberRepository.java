@@ -13,6 +13,7 @@ public interface MemberRepository {
 	public void save(MemberCreateDto memberCreateDto);
 	public int count();
 	public List<MemberDto> findMemberInfo();
-	public int findMemberIdByNickName(String nickName);
+	public String findMemberIdByNickName(String nickName);
+	public MemberDto findMemberInfoByMemberId(String id);
 	
 }
