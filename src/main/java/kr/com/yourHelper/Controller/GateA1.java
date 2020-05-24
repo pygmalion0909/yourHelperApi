@@ -52,6 +52,7 @@ public class GateA1 {
 	@GetMapping(value="/article/{code}")
 	@ApiOperation(value = "article", tags = "article")
 	public ArticleList getArticleList(@PathVariable("code") String code) {
+		System.out.println("articleList controller>>" + code);
 		return articleService.getArticleList(code);
 	}
 	
