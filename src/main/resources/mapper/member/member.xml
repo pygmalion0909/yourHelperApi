@@ -4,29 +4,29 @@
 <mapper namespace="kr.com.yourHelper.Dao.MemberRepository">
 	
 	<insert id="save">
-		INSERT INTO tb_member (login_id, password, nick_name, authority_id, create_date)
+		INSERT INTO tm_member (login_id, password, nick_name, authority_id, create_date)
 		VALUES (#{loginId}, #{password}, #{nickName}, #{authorityId}, now())
 	</insert>
 	
-	<select id="findMemberInfo" resultType="kr.com.yourHelper.Dto.MemberDto">
+	<select id="findMemberInfo" resultType="kr.com.yourHelper.QueryDto.MemberQueryDto">
 		SELECT *
-		FROM tb_member
+		FROM tm_member
 	</select>
 	
 	<select id="count" resultType="int">
 		SELECT count(id) 
-		FROM tb_member
+		FROM tm_member
 	</select>
 	
 	<select id="findMemberIdByNickName" resultType="String">
 		SELECT id
-		FROM tb_member
+		FROM tm_member
 		WHERE nick_name = #{nickName}
 	</select>
 	
-	<select id="findMemberInfoByMemberId" resultType="kr.com.yourHelper.Dto.MemberDto">
+	<select id="findMemberInfoByMemberId" resultType="kr.com.yourHelper.QueryDto.MemberQueryDto">
 		SELECT *
-		FROM tb_member
+		FROM tm_member
 		WHERE id = #{id}
 	</select>
 	

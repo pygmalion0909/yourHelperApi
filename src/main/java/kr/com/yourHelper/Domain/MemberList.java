@@ -2,11 +2,12 @@ package kr.com.yourHelper.Domain;
 
 import java.util.List;
 
-import kr.com.yourHelper.Dto.MemberDto;
+import kr.com.yourHelper.QueryDto.MemberQueryDto;
 
 public class MemberList {
+	
 	private int count;
-	private List<MemberDto> list;
+	private List<MemberQueryDto> list;
 	
 	public int getCount() {
 		return count;
@@ -14,14 +15,14 @@ public class MemberList {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public List<MemberDto> getList() {
+	public List<MemberQueryDto> getList() {
 		return list;
 	}
-	public void setList(List<MemberDto> list) {
+	public void setList(List<MemberQueryDto> list) {
 		this.list = list;
 	}
-
-	public MemberList(int count, List<MemberDto> list){
+	
+	public MemberList(int count, List<MemberQueryDto> list) {
 		this.count = count;
 		this.list = list;
 	}

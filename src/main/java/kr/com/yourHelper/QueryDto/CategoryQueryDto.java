@@ -1,6 +1,6 @@
-package kr.com.yourHelper.Dto;
+package kr.com.yourHelper.QueryDto;
 
-public class CategoryDto {
+public class CategoryQueryDto {
 	private String id;
 	private String name;
 	private String createDate;

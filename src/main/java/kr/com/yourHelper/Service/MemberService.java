@@ -2,6 +2,8 @@ package kr.com.yourHelper.Service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,10 +11,11 @@ import org.springframework.stereotype.Service;
 import kr.com.yourHelper.Dao.MemberRepository;
 import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.MemberCreateDto;
-import kr.com.yourHelper.Dto.MemberDto;
+import kr.com.yourHelper.QueryDto.MemberQueryDto;
 
 @Service
 public class MemberService {
+	private Logger logger = LoggerFactory.getLogger(MemberService.class);
 	
 	@Autowired
 	MemberRepository memberRepository;
@@ -21,14 +24,20 @@ public class MemberService {
 	 * member 생성.
 	 * 
 	 * 필수값>> $loginId $password $nickName $autyorityCode.
+	 * <strong>
 	 * password는 암호화, authorityId는 authorityCode로 값을 찾음.
 	 * 현재는 브라우저에서 member만 가입하게 만들어서 member의 id값인 2를 고정값으로 넣고 있음.
 	 * 향후 version2에서 admin생성 페이지를 따로 만들어서 코드 작성 요망.
+	 * 저장 시 authority코드로 id를 찾아서 member테이블에 찾아야함.
+	 * </strong>
 	 * 
 	 * @param memberCreateDto $memberId $password $nickName $authorityCode.
 	 * 
 	 */
 	public void createMember(MemberCreateDto memberCreateDto) {
+		
+		//controller에서 받는 최초값
+		logger.info("insertValueFromContoller>><{}>", memberCreateDto);
 		
 		//비밀번호 암호화
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -36,6 +45,7 @@ public class MemberService {
 		
 		//member저장
 		memberCreateDto.setAuthorityId("2");
+		logger.debug("memberCreateDto>><{}>", memberCreateDto);
 		memberRepository.save(memberCreateDto);
 		
 	}
@@ -43,22 +53,23 @@ public class MemberService {
 	/**
 	 * 모든 member 정보.
 	 * 
-	 * @return
+	 * @return $count [$loginId $nickName $createDate $modifyDate].
 	 * 
 	 */
 	public MemberList getMemberInfo() {
 		
 		//member총개수
 		int count = memberRepository.count();
-		System.out.println("memberCount>>" + count);
+		logger.debug("memberCount>><{}>", count);
 		
 		//member정보
-		List<MemberDto> MemberInfoList = memberRepository.findMemberInfo();
-		System.out.println("memberInfor>>" + MemberInfoList);
+		List<MemberQueryDto> MemberInfoList = memberRepository.findMemberInfo();
+		logger.debug("memberInfor>><{}>", MemberInfoList);
 		
 		//return
 		MemberList response = new MemberList(count, MemberInfoList);
-		System.out.println("memberInfoReturn" + response);
+		logger.info("returnMemberList<{}>", response);
+		
 		return response;
 		
 	}

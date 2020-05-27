@@ -1,14 +1,14 @@
-package kr.com.yourHelper.Dto;
+package kr.com.yourHelper.Domain;
 
-public class ArticleEntireDto {
+public class ArticleEntire {
 	
 	private String id;
 	private String title;
 	private String createDate;
 	private String modifyDate;
-	private int hit;
 	private String content;
 	private String nickName;
+	private int hit;
 	
 	public String getId() {
 		return id;

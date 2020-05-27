@@ -2,12 +2,10 @@ package kr.com.yourHelper.Domain;
 
 import java.util.List;
 
-import kr.com.yourHelper.Dto.ArticleEntireDto;
-
 public class ArticleList {
 	
 	private int count;
-	private List<ArticleEntireDto> list;
+	private List<ArticleEntire> list;
 	
 	public int getCount() {
 		return count;
@@ -15,14 +13,14 @@ public class ArticleList {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public List<ArticleEntireDto> getList() {
+	public List<ArticleEntire> getList() {
 		return list;
 	}
-	public void setList(List<ArticleEntireDto> list) {
+	public void setList(List<ArticleEntire> list) {
 		this.list = list;
 	}
 	
-	public ArticleList(int count, List<ArticleEntireDto> list) {
+	public ArticleList(int count, List<ArticleEntire> list) {
 		this.count = count;
 		this.list = list;
 	}

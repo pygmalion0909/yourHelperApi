@@ -18,15 +18,15 @@ public class SwaggerConfig {
 	//swagger ui에 표시될 정보 설정
 	private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("youerHelper API")
-                .description("youerHelper Project All API document")
+                .title("YourHelper API")
+                .description("YourHelper Project All API document")
                 .build();
     }
 	
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-        		//apiInfo는 .select()보다 위에 위치해야 적용됨
+        		//apiInfo(swagger ui설정)는 .select()보다 위에 위치해야 적용됨
         		.apiInfo(this.apiInfo())
                 .select()
                 //현재 RequestMapping으로 할당된 모든 URL 리스트를 추출

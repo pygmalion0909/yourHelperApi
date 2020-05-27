@@ -4,26 +4,17 @@
 <mapper namespace="kr.com.yourHelper.Dao.ArticleRepository">
 
 	<insert id="saveArticle">
-		INSERT INTO tb_article (member_id, category_id, title, create_date, hit)
-		VALUES (#{memberId}, #{categoryId}, #{title}, now(), 0)
-		
-		<selectKey resultType="String" keyProperty="id" order="AFTER">
-        	SELECT LAST_INSERT_ID()
-    	</selectKey>
+		INSERT INTO tb_article (member_id, category_id, title, content, create_date, hit)
+		VALUES (#{memberId}, #{categoryId}, #{title}, #{content}, now(), 0)
 	</insert>
 	
-	<insert id="saveContent">
-		INSERT INTO tb_article_content (article_id, content, create_date)
-		VALUES (#{articleId}, #{content}, now())
-	</insert>
-	
-	<select id="findCategoryByCode" resultType="kr.com.yourHelper.Dto.CategoryDto">
+	<select id="findCategoryByCode" resultType="kr.com.yourHelper.QueryDto.CategoryQueryDto">
 		SELECT *
 		FROM tb_category
 		WHERE code = #{code}
 	</select>
 	
-	<select id="findArticleInfoByCategoryId" resultType="kr.com.yourHelper.Dto.ArticleDto">
+	<select id="findArticleInfoByCategoryId" resultType="kr.com.yourHelper.QueryDto.ArticleQueryDto">
 		SELECT *
 		FROM tb_article
 		WHERE category_id = #{categoryId}
@@ -34,5 +25,25 @@
 		FROM tb_article
 		WHERE category_id = #{categoryId};
 	</select>
+	
+	<select id="findArticleInfoById" resultType="kr.com.yourHelper.QueryDto.ArticleQueryDto">
+		SELECT *
+		FROM tb_article
+		WHERE id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE tb_article
+		SET title = #{title},
+		    content = #{content},
+		    modify_date = now()
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE
+		FROM tb_article
+		WHERE id = #{id}
+	</delete>
 	
 </mapper>

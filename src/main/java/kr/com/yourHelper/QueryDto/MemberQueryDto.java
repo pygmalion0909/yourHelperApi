@@ -1,12 +1,10 @@
-package kr.com.yourHelper.Dto;
+package kr.com.yourHelper.QueryDto;
 
-public class MemberDto {
+public class MemberQueryDto {
 	
-	private String id;
 	private String loginId;
 	private String nickName;
 	private String createDate;
-	private String modifyDate;
 	
 	public String getLoginId() {
 		return loginId;
@@ -26,17 +24,10 @@ public class MemberDto {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public String getModifyDate() {
-		return modifyDate;
-	}
-	public void setModifyDate(String modifyDate) {
-		this.modifyDate = modifyDate;
-	}
 	
 	@Override
 	public String toString() {
-		return "MemberDto [loginId=" + loginId + ", nickName=" + nickName + ", createDate=" + createDate
-				+ ", modifyDate=" + modifyDate + "]";
+		return "MemberQueryDto [loginId=" + loginId + ", nickName=" + nickName + ", createDate=" + createDate + "]";
 	}
 	
 }
