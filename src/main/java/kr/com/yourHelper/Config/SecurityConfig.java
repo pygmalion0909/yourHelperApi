@@ -1,37 +1,68 @@
 package kr.com.yourHelper.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import kr.com.yourHelper.Security.CustomerAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	/**
-	 * 파일에대한 권한?
-	 * 아래 경로 security가 파일들은 무조건 통과하며, 파일 기준은 resources/static 디렉터리
-	 */
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/script/**", "image/**", "/fonts/**", "lib/**");
+	@Autowired 
+	private CustomerAuthenticationProvider authProvider;
+	
+//	@Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+	
+	//consturct
+	public SecurityConfig(CustomerAuthenticationProvider authProvider) {
+		this.authProvider = authProvider;
 	}
+
+	@Override 
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authProvider);
+	} 
 	
 	/**
-	 * 접근에대한 권한설정?
+	 * 접근제한 및 로그인
+	 * 
 	 */
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Override 
+	protected void configure(HttpSecurity http) throws Exception { 
 		
-		//Cross Site Request Forgery가 디폴트로 활성화 되어 있어 비활성화 시킴
-		//csrf가 설정되어 있는 경우 get방식은 상관없으나 post방식은 403에러를 발생 시킴
-		http.csrf().disable();
+		//csrf해제(form방식에 풀어야하는지 확인요망!)
+		http.csrf()
+			.disable();
 		
-		//api접근 권한 설정
-		http.authorizeRequests()
-			.antMatchers("/**").permitAll();
+        http.authorizeRequests()
+        	// 페이지 권한 설정
+            .antMatchers("/admin/**").hasRole("ADMIN")
+            .antMatchers("/user/myinfo").hasRole("MEMBER")
+            .antMatchers("/**").permitAll()
+            .and() // 로그인 설정
+            .formLogin()
+            //로그인 페이지 커스터아이징할때 사용
+//            .loginPage("/login")
+            .defaultSuccessUrl("/api/v1/test")
+            .permitAll()
+            .and() // 로그아웃 설정
+            .logout()
+            .logoutSuccessUrl("/api/v1/article/NT")
+            .invalidateHttpSession(true)
+            .and()
+            // 403 예외처리 핸들링
+            .exceptionHandling().accessDeniedPage("/user/denied");
 	}
 	
 }

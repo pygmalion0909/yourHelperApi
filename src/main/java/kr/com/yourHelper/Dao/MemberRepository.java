@@ -15,5 +15,6 @@ public interface MemberRepository {
 	public List<MemberQueryDto> findMemberInfo();
 	public String findMemberIdByNickName(String nickName);
 	public MemberQueryDto findMemberInfoByMemberId(String id);
+	public MemberQueryDto findMemberInfoByLoginId(String loginId);
 	
 }

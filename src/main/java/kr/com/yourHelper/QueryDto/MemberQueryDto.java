@@ -5,7 +5,14 @@ public class MemberQueryDto {
 	private String loginId;
 	private String nickName;
 	private String createDate;
+	private String password;
 	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getLoginId() {
 		return loginId;
 	}
@@ -27,7 +34,8 @@ public class MemberQueryDto {
 	
 	@Override
 	public String toString() {
-		return "MemberQueryDto [loginId=" + loginId + ", nickName=" + nickName + ", createDate=" + createDate + "]";
+		return "MemberQueryDto [loginId=" + loginId + ", nickName=" + nickName + ", createDate=" + createDate
+				+ ", password=" + password + "]";
 	}
 	
 }

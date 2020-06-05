@@ -30,4 +30,10 @@
 		WHERE id = #{id}
 	</select>
 	
+	
+	<select id="findMemberInfoByLoginId" resultType="kr.com.yourHelper.QueryDto.MemberQueryDto">
+		SELECT *
+		FROM tm_member
+		WHERE login_id = #{loginId}
+	</select>
 </mapper>

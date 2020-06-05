@@ -19,6 +19,7 @@ import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
 import kr.com.yourHelper.Dto.ArticleUpdateDto;
 import kr.com.yourHelper.Dto.MemberCreateDto;
+import kr.com.yourHelper.Dto.MemberDto;
 import kr.com.yourHelper.Service.ArticleServiece;
 import kr.com.yourHelper.Service.MemberService;
 
@@ -143,6 +144,27 @@ public class GateA1 {
 	public MemberList getMemberInfo() {
 		logger.info("outPutFromService>><{}>", memberService.getMemberInfo());
 		return memberService.getMemberInfo();
+	}
+	
+	/**
+	 * login
+	 * 
+	 * 필수param>> $loginId $password
+	 * 
+	 * @return JWT token
+	 * 
+	 */
+	@PostMapping("/login")
+	@ApiOperation(value = "login", tags = "login")
+	public String login(@RequestBody MemberDto member) {
+		System.out.println("!!!" + member);
+		logger.info("insertValueFront>><{}>", member);
+		return memberService.login(member);
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "성공!";
 	}
 	
 }
