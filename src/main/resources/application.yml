@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/helper?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: icandoit
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+#  type-aliases-package: kr.com.yourHelper
+# mybatis가 읽을 파일의 경로 설정
+  mapper-locations: mapper/**/*.xml
+# mybatis 설정 
+  configuration:
+# 카멜기호 맵핑 디폰트 false,
+    map-underscore-to-camel-case: true

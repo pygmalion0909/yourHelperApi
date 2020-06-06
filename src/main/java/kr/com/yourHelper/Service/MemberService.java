@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import kr.com.yourHelper.Dao.MemberRepository;
 import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.MemberCreateDto;
 import kr.com.yourHelper.Dto.MemberDto;
 import kr.com.yourHelper.Dto.RolesTestDto;
 import kr.com.yourHelper.QueryDto.MemberQueryDto;
+import kr.com.yourHelper.Repository.MemberRepository;
 
 @Service
 public class MemberService {
@@ -38,19 +38,39 @@ public class MemberService {
 	 * @param memberCreateDto $memberId $password $nickName $authorityCode.
 	 * 
 	 */
-	public void createMember(MemberCreateDto memberCreateDto) {
+	public String createMember(MemberCreateDto memberCreateDto) {
 		
 		//controller에서 받는 최초값
 		logger.info("insertValueFromContoller>><{}>", memberCreateDto);
 		
-		//비밀번호 암호화
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		memberCreateDto.setPassword(passwordEncoder.encode(memberCreateDto.getPassword()));
-//		
-//		//member저장
-//		memberCreateDto.setAuthorityId("2");
-//		logger.debug("memberCreateDto>><{}>", memberCreateDto);
-//		memberRepository.save(memberCreateDto);
+		//loginId 중복체크 숫자
+		int loginIdCheck = memberRepository.checkLoginId(memberCreateDto);
+		logger.info("loginIdCheck<{}>", loginIdCheck);
+		
+		if(loginIdCheck == 0) {
+			
+			//nickName 중복체크
+			int nickNameCheck = memberRepository.checkNickname(memberCreateDto);
+			logger.info("nickNameCheck<{}>", nickNameCheck);
+			
+			if(nickNameCheck == 0) {
+				//비밀번호 암호화
+				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+				memberCreateDto.setPassword(passwordEncoder.encode(memberCreateDto.getPassword()));
+			
+				//member저장
+				memberCreateDto.setAuthorityId(memberCreateDto.getAuthorityId());
+				logger.debug("memberCreateDto>><{}>", memberCreateDto);
+				memberRepository.save(memberCreateDto);
+				return "가입성공 하였습니다.";
+				
+			}else {
+				return "닉네임 중복 입니다.";
+			}
+			
+		}else {
+			return "아이디 중복 입니다.";
+		}
 		
 	}
 	
@@ -77,44 +97,5 @@ public class MemberService {
 		return response;
 		
 	}
-	
-	/**
-	 * login
-	 * 
-	 */
-	public String login(MemberDto member) {
-		//1. 클라이언트에서 id,password를 넘긴다.
-		//2. 클라이언트가 넘긴 id를 먼저 체크 후 없으면 throw new 던진다.
-		//3. id가 있는경우 password를 체크한다.
-		//4. 체크 결과가 true인경우 jwtTokenProvider에 넘긴다.
-		//5. false일 경우 throw new를 던진다.
-		//아래는 jwt를사용예제이다. 나중에 다시 짜기!
-		//권한도 지정해서 줘야함!!!!!!!! 정보 들고 올 때 권한도 가져오기.
-		logger.info("insertValueFromContoller>><{}>", member);
 		
-		//member정보
-		MemberQueryDto memberInfo = memberRepository.findMemberInfoByLoginId(member.getLoginId());
-		logger.info("memberInfo>><{}>", memberInfo);
-		
-		//password check
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		boolean checkPassword = passwordEncoder.matches(member.getPassword(), memberInfo.getPassword());
-		logger.info("password비교>><{}>", checkPassword);
-		
-		//login AND passwor true OR false 분기처리
-		//loginId있는지 체크
-		
-		RolesTestDto rolesTestDto = new RolesTestDto();
-		rolesTestDto.setId("1");
-		rolesTestDto.setRole("MEMBER");
-		
-		List<String> roles = new ArrayList<>();
-		roles.add("MEMBER");
-		
-		return "STring";
-		//비밀번호 맞는지 체크
-//		return JwtTokenProvider.createToken(member.getLoginId(), roles);
-		
-	}
-	
 }

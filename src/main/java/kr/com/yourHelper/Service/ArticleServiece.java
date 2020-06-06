@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.com.yourHelper.Dao.ArticleRepository;
-import kr.com.yourHelper.Dao.MemberRepository;
 import kr.com.yourHelper.Domain.ArticleEntire;
 import kr.com.yourHelper.Domain.ArticleList;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
@@ -17,6 +15,8 @@ import kr.com.yourHelper.Dto.ArticleUpdateDto;
 import kr.com.yourHelper.QueryDto.ArticleQueryDto;
 import kr.com.yourHelper.QueryDto.CategoryQueryDto;
 import kr.com.yourHelper.QueryDto.MemberQueryDto;
+import kr.com.yourHelper.Repository.ArticleRepository;
+import kr.com.yourHelper.Repository.MemberRepository;
 
 @Service
 public class ArticleServiece{
@@ -26,6 +26,43 @@ public class ArticleServiece{
 	private ArticleRepository articleRepository;
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	/**
+	 * main page article list
+	 * 
+	 */
+	public ArticleList mainArticle() {
+		
+		//article total count
+		int totalCount = articleRepository.totalCount();
+		logger.info("totalCount<{}>", totalCount);
+		
+		//article info
+		List<ArticleQueryDto> articleInfo = articleRepository.findArticleInfo();
+		logger.info("articleInfo<{}>", articleInfo);
+		
+		//return객체
+		List<ArticleEntire> list = new ArrayList<>();
+		
+		for(ArticleQueryDto value : articleInfo) {
+			
+			ArticleEntire articleEntire = new ArticleEntire();
+			articleEntire.setId(value.getId());
+			articleEntire.setTitle(value.getTitle());
+//			articleEntire.setNickName(value.getNickName());
+			articleEntire.setCreateDate(value.getCreateDate());
+			articleEntire.setModifyDate(value.getModifyDate());
+			articleEntire.setHit(value.getHit());
+			list.add(articleEntire);
+			
+		}
+		
+		//return
+		ArticleList articleList = new ArticleList(totalCount, list);
+		return articleList;
+		
+	}
+	
 	
 	/**
 	 * article 저장.
@@ -77,7 +114,8 @@ public class ArticleServiece{
 		
 		//count정보
 		int count = articleRepository.findCountByCategoryId(categoryInfo.getId());
-		logger.debug("count>><{}>", count);
+		System.out.println("count!!" + count);
+		logger.info("count>><{}>", count);
 		
 		//article정보
 		List<ArticleQueryDto> articleInfo = articleRepository.findArticleInfoByCategoryId(categoryInfo.getId());

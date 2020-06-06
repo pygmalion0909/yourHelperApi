@@ -1,4 +1,4 @@
-package kr.com.yourHelper.Dao;
+package kr.com.yourHelper.Repository;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ public interface MemberRepository {
 	
 	public void save(MemberCreateDto memberCreateDto);
 	public int count();
+	public int checkLoginId(MemberCreateDto memberCreateDto);
+	public int checkNickname(MemberCreateDto memberCreateDto);
 	public List<MemberQueryDto> findMemberInfo();
 	public String findMemberIdByNickName(String nickName);
 	public MemberQueryDto findMemberInfoByMemberId(String id);

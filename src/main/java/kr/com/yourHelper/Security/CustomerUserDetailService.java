@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import kr.com.yourHelper.Dao.MemberRepository;
 import kr.com.yourHelper.QueryDto.MemberQueryDto;
+import kr.com.yourHelper.Repository.MemberRepository;
 
 @Service
 public class CustomerUserDetailService implements UserDetailsService{

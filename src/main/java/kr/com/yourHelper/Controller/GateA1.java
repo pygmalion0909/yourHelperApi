@@ -1,5 +1,7 @@
 package kr.com.yourHelper.Controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,6 @@ import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
 import kr.com.yourHelper.Dto.ArticleUpdateDto;
 import kr.com.yourHelper.Dto.MemberCreateDto;
-import kr.com.yourHelper.Dto.MemberDto;
 import kr.com.yourHelper.Service.ArticleServiece;
 import kr.com.yourHelper.Service.MemberService;
 
@@ -32,6 +33,22 @@ public class GateA1 {
 	ArticleServiece articleService;
 	@Autowired
 	MemberService memberService;
+	
+	/**
+	 * main page
+	 * 
+	 * 로그인 접속 후 첫화면.
+	 * 모든 article을 가져옴.
+	 * 페이징 처리 필요.
+	 * 
+	 * @Return ArticleList $id $title $nickName $createDate $modifyDate $hit $count
+	 * 
+	 */
+	@GetMapping(value="/main")
+	@ApiOperation(value = "main", tags = "main")
+	public ArticleList main() {
+		return articleService.mainArticle();
+	}
 	
 	/**
 	 * article 생성.
@@ -122,9 +139,9 @@ public class GateA1 {
 	 */
 	@PostMapping("/member/create")
 	@ApiOperation(value = "member", tags = "member")
-	public void createMember(@RequestBody MemberCreateDto memberCreateDto) {
+	public String createMember(@RequestBody MemberCreateDto memberCreateDto) {
 		logger.info("insertValueFront>><{}>", memberCreateDto);
-		memberService.createMember(memberCreateDto);
+		return memberService.createMember(memberCreateDto);
 	}
 	
 	/**
@@ -145,26 +162,5 @@ public class GateA1 {
 		logger.info("outPutFromService>><{}>", memberService.getMemberInfo());
 		return memberService.getMemberInfo();
 	}
-	
-	/**
-	 * login
-	 * 
-	 * 필수param>> $loginId $password
-	 * 
-	 * @return JWT token
-	 * 
-	 */
-	@PostMapping("/login")
-	@ApiOperation(value = "login", tags = "login")
-	public String login(@RequestBody MemberDto member) {
-		System.out.println("!!!" + member);
-		logger.info("insertValueFront>><{}>", member);
-		return memberService.login(member);
-	}
-	
-	@GetMapping("/test")
-	public String test() {
-		return "성공!";
-	}
-	
+
 }

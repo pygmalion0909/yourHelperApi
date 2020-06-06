@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.com.yourHelper.Dao.MemberRepository">
+<mapper namespace="kr.com.yourHelper.Repository.MemberRepository">
 	
 	<insert id="save">
 		INSERT INTO tm_member (login_id, password, nick_name, authority_id, create_date)
@@ -30,10 +30,22 @@
 		WHERE id = #{id}
 	</select>
 	
-	
 	<select id="findMemberInfoByLoginId" resultType="kr.com.yourHelper.QueryDto.MemberQueryDto">
 		SELECT *
 		FROM tm_member
 		WHERE login_id = #{loginId}
 	</select>
+	
+	<select id="checkLoginId" resultType="int">
+		SELECT count(id)
+		FROM tm_member
+		WHERE login_id = #{loginId}
+	</select>
+	
+	<select id="checkNickname" resultType="int">
+		SELECT count(id)
+		FROM tm_member
+		WHERE nick_name = #{nickName}
+	</select>
+	
 </mapper>

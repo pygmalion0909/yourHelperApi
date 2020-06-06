@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.com.yourHelper.Dao.ArticleRepository">
+<mapper namespace="kr.com.yourHelper.Repository.ArticleRepository">
 
 	<insert id="saveArticle">
 		INSERT INTO tb_article (member_id, category_id, title, content, create_date, hit)
 		VALUES (#{memberId}, #{categoryId}, #{title}, #{content}, now(), 0)
 	</insert>
+	
+	<select id="totalCount" resultType="int">
+		SELECT count(id)
+		FROM tb_article
+	</select>
+	
+	<select id="findArticleInfo" resultType="kr.com.yourHelper.QueryDto.ArticleQueryDto">
+		SELECT id, member_id, category_id, title, create_date, modify_date, hit
+		FROM tb_article
+	</select>
 	
 	<select id="findCategoryByCode" resultType="kr.com.yourHelper.QueryDto.CategoryQueryDto">
 		SELECT *
