@@ -162,5 +162,9 @@ public class GateA1 {
 		logger.info("outPutFromService>><{}>", memberService.getMemberInfo());
 		return memberService.getMemberInfo();
 	}
-
+	
+	@GetMapping("/login")
+	public String test() {
+		return "login.html";
+	}
 }

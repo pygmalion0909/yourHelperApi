@@ -7,8 +7,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import kr.com.yourHelper.Security.CustomerAuthenticationProvider;
 
@@ -46,29 +47,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	//.antMatchers("/user/myinfo").hasRole("MEMBER")
         	
         	//모두 접근 가능한 url설정
-            .antMatchers("/login").permitAll()
+            .antMatchers("/api/v1/login").permitAll()
             .antMatchers("/api/v1/member/create").permitAll()
             
             //모든요청에 인증된 대상만 접근하는 설정
             .anyRequest().authenticated()
-            
-            // 로그인 설정
             .and()
+            
+            //cors설정
+            .cors()
+            
+            .and()
+            // 로그인 설정
             //form로그인 방식선언
             .formLogin()
             
             //로그인 페이지 커스터아이징할때 사용
-            //.loginPage("/login")
+            .loginPage("/api/v1/login")
             
             //로그인 성공시 접근하는 url설정
             .defaultSuccessUrl("/api/v1/main")
             
+//          	파라티터 이름 바꾸는듯   
+//            .usernameParameter("id")
+//            .passwordParameter("password");
+            
             // 로그아웃 설정
             .and()
+            //기본적으로 security에서 "/logout"로 접속하면 세션 삭제하게 기능 구현 해놈
             .logout()
             
+            //로그아웃 커스터아이징할때 사용
+            //.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+            
             //로그아웃이 성공했을 때 url이동 설정
-            .logoutSuccessUrl("/api/v1/article/NT")
+            .logoutSuccessUrl("/api/v1/login")
             
             //
             .invalidateHttpSession(true)
@@ -77,6 +90,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .exceptionHandling().accessDeniedPage("/login");
         
+	}
+	
+	/*
+	 * cors설정
+	 * 
+	 */
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.addAllowedOrigin("*");
+		configuration.addAllowedMethod("*");
+		configuration.addAllowedHeader("*");
+		configuration.setAllowCredentials(true);
+		configuration.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 	
 }

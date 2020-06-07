@@ -59,7 +59,7 @@ public class MemberService {
 				memberCreateDto.setPassword(passwordEncoder.encode(memberCreateDto.getPassword()));
 			
 				//member저장
-				memberCreateDto.setAuthorityId(memberCreateDto.getAuthorityId());
+				memberCreateDto.setAuthorityId("2");
 				logger.debug("memberCreateDto>><{}>", memberCreateDto);
 				memberRepository.save(memberCreateDto);
 				return "가입성공 하였습니다.";
