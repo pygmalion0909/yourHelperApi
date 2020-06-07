@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	//.antMatchers("/user/myinfo").hasRole("MEMBER")
         	
         	//모두 접근 가능한 url설정
-            .antMatchers("/api/v1/login").permitAll()
+            .antMatchers("/loginPage").permitAll()
             .antMatchers("/api/v1/member/create").permitAll()
             
             //모든요청에 인증된 대상만 접근하는 설정
@@ -56,17 +56,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             
             //cors설정
             .cors()
-            
             .and()
+            
             // 로그인 설정
             //form로그인 방식선언
             .formLogin()
             
-            //로그인 페이지 커스터아이징할때 사용
-            .loginPage("/api/v1/login")
+            //로그인 요청이 들어왔을 때 spring security가 인증하는 경로 설정
+            .loginProcessingUrl("/api/v1/login")
+            
+            //로그인 ul 페이지 정보 제공 url경로 설정
+            .loginPage("/loginPage")
             
             //로그인 성공시 접근하는 url설정
-            .defaultSuccessUrl("/api/v1/main")
+//            .defaultSuccessUrl("/api/v1/main")
             
 //          	파라티터 이름 바꾸는듯   
 //            .usernameParameter("id")

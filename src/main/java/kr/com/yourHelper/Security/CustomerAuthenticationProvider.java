@@ -28,6 +28,8 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider{
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		
+		System.out.println("authentication>> " + authentication);
+		
 		//암호화 객체 생성
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		
@@ -39,6 +41,8 @@ public class CustomerAuthenticationProvider implements AuthenticationProvider{
 		//username, password 할당
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
+		System.out.println("username>> " + username);
+		System.out.println("password>> " + password);
 		
 		//username검사
 		if(authentication.getCredentials() == null){ 

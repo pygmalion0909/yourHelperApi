@@ -1,10 +1,9 @@
 package kr.com.yourHelper.Controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +20,7 @@ import kr.com.yourHelper.Domain.MemberList;
 import kr.com.yourHelper.Dto.ArticleCreateDto;
 import kr.com.yourHelper.Dto.ArticleUpdateDto;
 import kr.com.yourHelper.Dto.MemberCreateDto;
+import kr.com.yourHelper.Security.CustomerAuthenticationProvider;
 import kr.com.yourHelper.Service.ArticleServiece;
 import kr.com.yourHelper.Service.MemberService;
 
@@ -163,8 +163,13 @@ public class GateA1 {
 		return memberService.getMemberInfo();
 	}
 	
-	@GetMapping("/login")
-	public String test() {
-		return "login.html";
-	}
+	
+//	@Autowired
+//	CustomerAuthenticationProvider customerAuthenticationProvider;
+//	
+//	@PostMapping("/login")
+//	public Authentication test(@RequestBody Authentication authentication) {
+//		System.out.println(">>>>"+authentication);
+//		return customerAuthenticationProvider.authenticate(authentication);
+//	}
 }
